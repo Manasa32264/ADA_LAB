@@ -6,10 +6,11 @@ int count =0;
 void selection(int arr[],int n){
     count=0;
     int min=0;
-    for(int i=0;i<n-1;i++){
+    for(int i=0;i<n-2;i++){
+        
         
         min=i;
-        for(int j=i+1;j<n;j++){
+        for(int j=i+1;j<n-1;j++){
             count++;
             if(arr[j]<arr[min]){
                 min=j;
