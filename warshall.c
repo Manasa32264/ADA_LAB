@@ -1,0 +1,92 @@
+#include<stdio.h>
+#include<stdlib.h>
+
+int opcount=0;
+int path[100][100];
+int n;
+ 
+void warshall(int adj[n][n],int n){
+    opcount=0;
+    for(int i=0;i<n;i++){
+        for(int j=0;j<n;j++){
+            path[i][j]=adj[i][j];
+        }
+    }
+    for(int i=0;i<n;i++){
+        for(int j=0;j<n;j++){
+            for(int k=0;k<n;k++){
+                opcount++;
+                path[j][k]=path[j][k] || path[j][i] && path[i][k];
+            }
+        }
+         printf("\nMatrix after including node %d as intermediate:\n", i);
+    for(int i=0;i<n;i++){
+        for(int j=0;j<n;j++){
+            printf("%d\t",path[i][j]);
+             
+        }
+        printf("\n");
+       
+    }
+    }
+}
+
+void tester(){
+    printf("Enter the number of nodes\n");
+    scanf("%d",&n);
+    int adj[n][n];
+    for(int i=0;i<n;i++){
+        for(int j=0;j<n;j++){
+            scanf("%d",&adj[i][j]);
+        }
+    }
+            warshall(adj,n);
+            printf("\n Final transitive closure matrix\n");
+            for(int i=0;i<n;i++){
+                for(int j=0;j<n;j++){
+                    printf("%d\t",path[i][j]);
+                    
+                }
+                printf("\n");
+            }
+        
+    }
+   void plotter(){
+    FILE *fp1;
+    fp1 = fopen("warshall.txt", "w");
+    int adj[100][100];
+    for(int k = 1; k <= 10; k++){
+        n = k;
+        for(int i = 0; i < n; i++){
+            for(int j = 0; j < n; j++){
+                if(i != j){
+                    adj[i][j] = 1; 
+                } else {
+                    adj[i][j] = 0;
+                }
+            }
+        }
+        warshall(adj, k);
+        fprintf(fp1, "%d %d\n", k, opcount);
+    }
+    fclose(fp1); 
+}
+
+
+
+void main(){
+    int ch;
+    printf("Enter\n1.Tester\n2.Plotter\n");
+    scanf("%d", &ch);
+    switch (ch)
+    {
+    case 1:
+        tester();
+        break;
+    case 2:
+        plotter();
+        break;
+    default:
+        printf("Invalid choice!! ");
+}
+}
